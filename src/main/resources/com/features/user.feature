@@ -10,5 +10,6 @@ Feature: Users API's Validation
     Given I have API endpoint
     When I send the request
     Then I validate the response code
+    Then I validate the last name
 
 
