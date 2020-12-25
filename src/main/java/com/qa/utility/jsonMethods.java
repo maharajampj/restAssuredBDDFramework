@@ -76,4 +76,11 @@ public class jsonMethods
 		float num=Float.parseFloat(res.jsonPath().getString(path));
 		return num;
 	}
+	public double returnDouble(Response res,String path)
+	{
+		String value=res.jsonPath().getString(path);
+		System.out.println(value);
+		double num=Double.parseDouble(value);
+		return num;
+	}
 }

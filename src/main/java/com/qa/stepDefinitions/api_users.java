@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.hamcrest.collection.HasItemInArray;
 
+import com.qa.utility.geoMethods;
 import com.qa.utility.jsonMethods;
 import com.qa.utility.setUp;
 
@@ -23,11 +24,12 @@ import static org.hamcrest.Matchers.*;
 public class api_users 
 {
 	Properties prop=setUp.envSetUp();
-	String baseUri=prop.getProperty("baseUri");
-	String userPath=prop.getProperty("userPath");
+	String baseUri=prop.getProperty("basseUri1");
+	String userPath=prop.getProperty("userPath1");
 	RequestSpecification req=null;
 	Response res=null;	
 	jsonMethods jsonMeth=new jsonMethods();
+	geoMethods geoMeth=new geoMethods();
 	
 	
 	
@@ -58,7 +60,7 @@ public class api_users
 		names.add("George");
 		names.add("Janet");
 		names.add("Emma");
-		//jsonMeth.ValidateHasItems(res, "data.first_name", names);
+		jsonMeth.ValidateHasItems(res, "data.first_name", names);
 		jsonMeth.ValidateKeyNumber(res, "total_pages", 2);
 		jsonMeth.ValidateKeyText(res, "data[0].first_name", "George");
 		
@@ -70,6 +72,18 @@ public class api_users
 		System.out.println(jsonMeth.returnListOfString(res, "data.avatar"));
 		System.out.println(jsonMeth.returnInt(res, "data[0].id"));
 		System.out.println(jsonMeth.returnFloat(res, "data[0].id"));
+	
+	}
+	@Then("I validate the distance from {double} and {double}")
+	public void validateDistance(double lat1,double lon1)
+	{
+		List<String> lat2=jsonMeth.returnListOfString(res, "address.geo.lat");
+		List<String> lon2=jsonMeth.returnListOfString(res, "address.geo.lng");
+		for(int i=0;i<lat2.size();i++)
+		{
+			
+		System.out.println(geoMeth.ditanceFinder(lat1, lon1, Double.parseDouble(lat2.get(i)), Double.parseDouble(lon2.get(i))));
+		}
 	
 	}
 	
