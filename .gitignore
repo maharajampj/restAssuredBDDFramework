@@ -2,4 +2,4 @@ target
 allure-results
 test-output
 TestData
-src/main/resources/env.properties
+
