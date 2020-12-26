@@ -84,6 +84,8 @@ public class api_users
 			
 		System.out.println(geoMeth.ditanceFinder(lat1, lon1, Double.parseDouble(lat2.get(i)), Double.parseDouble(lon2.get(i))));
 		}
+		jsonMeth.ValidateStatuCode(res,200);
+		jsonMeth.ValidateHeader(req, res);
 	
 	}
 	

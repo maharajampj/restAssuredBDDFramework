@@ -10,10 +10,17 @@ import static org.hamcrest.Matchers.*;
 import org.hamcrest.collection.HasItemInArray;
 
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class jsonMethods 
 {
 
+	public void ValidateStatuCode(Response res,int code)
+	{
+		res.then().statusCode(code);
+	
+	}
+	
 	public String printObject(Object obj) 
 	{
         ObjectMapper objMap=new ObjectMapper();
@@ -82,5 +89,9 @@ public class jsonMethods
 		System.out.println(value);
 		double num=Double.parseDouble(value);
 		return num;
+	}
+	public void ValidateHeader(RequestSpecification req,Response res)
+	{
+		System.out.println(res.getHeader("Content-Type"));
 	}
 }
