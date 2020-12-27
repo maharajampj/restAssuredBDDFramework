@@ -1,6 +1,6 @@
 package com.qa.utility;
 
-public class geoMethods 
+public class geoFunctions 
 {
 	public double ditanceFinder(double lat1,double lon1,double lat2,double lon2)
 	{

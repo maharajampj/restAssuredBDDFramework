@@ -6,8 +6,10 @@ import java.util.Properties;
 
 import org.hamcrest.collection.HasItemInArray;
 
-import com.qa.utility.geoMethods;
-import com.qa.utility.jsonMethods;
+import com.qa.objects.users;
+import com.qa.utility.dateFunctions;
+import com.qa.utility.geoFunctions;
+import com.qa.utility.jsonFunctions;
 import com.qa.utility.setUp;
 
 import io.cucumber.java.Before;
@@ -28,8 +30,10 @@ public class api_users
 	String userPath=prop.getProperty("userPath1");
 	RequestSpecification req=null;
 	Response res=null;	
-	jsonMethods jsonMeth=new jsonMethods();
-	geoMethods geoMeth=new geoMethods();
+	jsonFunctions jsonFun=new jsonFunctions();
+	geoFunctions geoFun=new geoFunctions();
+	dateFunctions dateFun=new dateFunctions();
+	users user=new users("Jeevi","Banker");
 	
 	
 	
@@ -45,10 +49,10 @@ public class api_users
 	{
 	}
 	
-	@When("^I send the request$")
+	@When("^I send GET request$")
 	public void sendRequest()
 	{
-		res=req.when().get(userPath);
+		res=req.get(userPath);
 	}
 	
 	@Then("^I validate the response code$")
@@ -60,32 +64,39 @@ public class api_users
 		names.add("George");
 		names.add("Janet");
 		names.add("Emma");
-		jsonMeth.ValidateHasItems(res, "data.first_name", names);
-		jsonMeth.ValidateKeyNumber(res, "total_pages", 2);
-		jsonMeth.ValidateKeyText(res, "data[0].first_name", "George");
+		jsonFun.ValidateHasItems(res, "data.first_name", names);
+		jsonFun.ValidateKeyNumber(res, "total_pages", 2);
+		jsonFun.ValidateKeyText(res, "data[0].first_name", "George");
 		
 	
 	}
 	@Then("^I validate the last name$")
 	public void validateLastNameCode()
 	{
-		System.out.println(jsonMeth.returnListOfString(res, "data.avatar"));
-		System.out.println(jsonMeth.returnInt(res, "data[0].id"));
-		System.out.println(jsonMeth.returnFloat(res, "data[0].id"));
+		System.out.println(jsonFun.returnListOfString(res, "data.avatar"));
+		System.out.println(jsonFun.returnInt(res, "data[0].id"));
+		System.out.println(jsonFun.returnFloat(res, "data[0].id"));
 	
+	}
+	@Then("^I validate the created time$")
+	public void validateCreatedTime()
+	{
+
+		System.out.println(dateFun.dateDifference("2020-12-27T17:51:39.718Z", "2020-10-26T17:51:39.718Z"));
+		System.out.println(dateFun.isLeapYear("100-12-27T17:51:39.718Z"));
 	}
 	@Then("I validate the distance from {double} and {double}")
 	public void validateDistance(double lat1,double lon1)
 	{
-		List<String> lat2=jsonMeth.returnListOfString(res, "address.geo.lat");
-		List<String> lon2=jsonMeth.returnListOfString(res, "address.geo.lng");
+		List<String> lat2=jsonFun.returnListOfString(res, "address.geo.lat");
+		List<String> lon2=jsonFun.returnListOfString(res, "address.geo.lng");
 		for(int i=0;i<lat2.size();i++)
 		{
 			
-		System.out.println(geoMeth.ditanceFinder(lat1, lon1, Double.parseDouble(lat2.get(i)), Double.parseDouble(lon2.get(i))));
+		System.out.println(geoFun.ditanceFinder(lat1, lon1, Double.parseDouble(lat2.get(i)), Double.parseDouble(lon2.get(i))));
 		}
-		jsonMeth.ValidateStatuCode(res,200);
-		jsonMeth.ValidateHeader(req, res);
+		jsonFun.ValidateStatuCode(res,200);
+		jsonFun.ValidateHeader(req, res);
 	
 	}
 	

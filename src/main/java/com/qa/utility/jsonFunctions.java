@@ -12,7 +12,7 @@ import org.hamcrest.collection.HasItemInArray;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class jsonMethods 
+public class jsonFunctions 
 {
 
 	public void ValidateStatuCode(Response res,int code)
