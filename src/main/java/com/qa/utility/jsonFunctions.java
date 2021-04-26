@@ -75,8 +75,17 @@ public class jsonFunctions
 	}
 	public int returnInt(Response res,String path)
 	{
-		int num=Integer.parseInt(res.jsonPath().getString(path));
+		int num = 0;
+		try
+		{
+		 num=Integer.parseInt(res.jsonPath().getString(path));
+		}
+		catch(NumberFormatException e)
+		{
+			System.out.println("The path is inCorrect");
+		}
 		return num;
+		
 	}
 	public float returnFloat(Response res,String path)
 	{
@@ -86,7 +95,6 @@ public class jsonFunctions
 	public double returnDouble(Response res,String path)
 	{
 		String value=res.jsonPath().getString(path);
-		System.out.println(value);
 		double num=Double.parseDouble(value);
 		return num;
 	}
