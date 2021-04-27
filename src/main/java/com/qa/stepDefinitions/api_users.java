@@ -33,7 +33,6 @@ public class api_users
 	jsonFunctions jsonFun=new jsonFunctions();
 	geoFunctions geoFun=new geoFunctions();
 	dateFunctions dateFun=new dateFunctions();
-	users user=new users("Jeevi","Banker");
 	
 	
 	

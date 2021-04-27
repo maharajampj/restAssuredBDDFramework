@@ -14,32 +14,38 @@ import io.restassured.specification.RequestSpecification;
 public class request 
 {
 	Properties prop=setUp.envSetUp();
-	public  String baseUri=prop.getProperty("baseUri");
+	public  String baseUri=prop.getProperty("petStoreUri");
+	RequestSpecification req=RestAssured.given().baseUri(baseUri);
+	
+	
+	public RequestSpecification getReq() {
+		return req;
+	}
+	public void setReq(RequestSpecification req) {
+		this.req = req;
+	}
 	public Response sendPostRequest(Headers headers,Object obj,String path)
 	{
-		RequestSpecification req=RestAssured.given().baseUri(baseUri);
+		
 		req.headers(headers);
-		req.body(obj.toString());
+		req.body(obj);
 		Response res=req.post(path);
 		return res;
 	}
 	public Response sendGetRequest(Headers headers,String path)
 	{
-		RequestSpecification req=RestAssured.given().baseUri(baseUri);
 		req.headers(headers);
 		Response res=req.get(path);
 		return res;
 	}
 	public Response sendPutRequest(Headers headers,Object obj,String path)
 	{
-		RequestSpecification req=RestAssured.given().baseUri(baseUri);
 		req.headers(headers);
 		Response res=req.put(path);
 		return res;
 	}
 	public Response sendDeleteRequest(Headers headers,Object obj,String path)
 	{
-		RequestSpecification req=RestAssured.given().baseUri(baseUri);
 		req.headers(headers);
 		Response res=req.delete(path);
 		return res;
