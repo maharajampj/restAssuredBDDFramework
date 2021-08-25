@@ -24,6 +24,7 @@ Feature: Users API's Validation
   Scenario: Validate the List of Users
     Given I have API endpoint
     When I send GET request
+    Then I validate the schema
     Then I validate the created time
 
 

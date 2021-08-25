@@ -1,5 +1,6 @@
 package com.qa.stepDefinitions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -8,6 +9,7 @@ import org.hamcrest.collection.HasItemInArray;
 
 import com.qa.objects.users;
 import com.qa.utility.dateFunctions;
+import com.qa.utility.fileFunctions;
 import com.qa.utility.geoFunctions;
 import com.qa.utility.jsonFunctions;
 import com.qa.utility.setUp;
@@ -21,18 +23,22 @@ import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.Matchers.*;
 
 public class api_users 
 {
 	Properties prop=setUp.envSetUp();
-	String baseUri=prop.getProperty("basseUri1");
-	String userPath=prop.getProperty("userPath1");
+	String baseUri=prop.getProperty("baseUri");
+	String userPath=prop.getProperty("userPath");
 	RequestSpecification req=null;
 	Response res=null;	
 	jsonFunctions jsonFun=new jsonFunctions();
 	geoFunctions geoFun=new geoFunctions();
 	dateFunctions dateFun=new dateFunctions();
+	fileFunctions fileFun=new fileFunctions();
+	
+	String userSchemaPath="//src//main//resources//schema//users.json";
 	
 	
 	
@@ -97,6 +103,12 @@ public class api_users
 		jsonFun.ValidateStatuCode(res,200);
 		jsonFun.ValidateHeader(req, res);
 	
+	}
+	@Then("I validate the schema")
+	public void validateSchema()
+	{
+		File schema = fileFun.readFile(userSchemaPath);
+		res.then().body(matchesJsonSchema(schema));
 	}
 	
 }
